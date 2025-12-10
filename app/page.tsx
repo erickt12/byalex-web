@@ -17,7 +17,7 @@ export default function Home() {
     const handleResize = () => {
       const mobile = window.innerWidth <= 768;
       setIsMobile(mobile);
-      setBallCount(mobile ? 50 : 85);
+      setBallCount(mobile ? 45 : 85);
     };
 
     handleResize();
@@ -57,7 +57,7 @@ export default function Home() {
             <div className="absolute inset-0 z-0 pointer-events-none md:pointer-events-auto">
                <Ballpit 
                   count={ballCount}
-                  gravity={1}
+                  gravity={0.1}
                   friction={0.95}
                   wallBounce={0.95}
                   followCursor={!isMobile} 
