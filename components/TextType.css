@@ -1,0 +1,19 @@
+/* components/TextType.css */
+.text-type {
+    display: inline-block;
+    white-space: pre-wrap;
+}
+
+.text-type__cursor {
+    margin-left: 0.1em;
+    /* Ajusté esto para que quede más cerquita */
+    display: inline-block;
+    opacity: 1;
+    color: #bd00ff;
+    /* NEON PURPLE para el cursor */
+    text-shadow: 0 0 5px #bd00ff;
+}
+
+.text-type__cursor--hidden {
+    display: none;
+}
