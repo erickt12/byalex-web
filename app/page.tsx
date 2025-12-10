@@ -8,6 +8,7 @@ import Ribbons from '@/components/Ribbons';
 import Ballpit from '@/components/Ballpit';
 import TopBar from '@/components/TopBar';
 import TextType from '@/components/TextType';
+import Process from '@/components/Process';
 
 export default function Home() {
   const [ballCount, setBallCount] = useState(50);
@@ -127,6 +128,9 @@ export default function Home() {
           </section>
 
           <ProjectGallery />
+
+          {/* --- CÓMO TRABAJO (NUEVA SECCIÓN) --- */}
+          <Process />
 
           <section className="h-screen flex items-center justify-center bg-black">
               <h2 className="text-[15vw] font-bold text-gray-900 hover:text-white transition-colors duration-500 cursor-pointer">
