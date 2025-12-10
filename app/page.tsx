@@ -1,7 +1,6 @@
 // src/app/page.tsx
 'use client';
 import { useState, useEffect } from 'react';
-// ... (tus imports siguen igual)
 import Preloader from '@/components/Preloader';
 import ProjectGallery from '@/components/ProjectGallery';
 import SmoothScroll from '@/components/SmoothScroll';
@@ -11,27 +10,32 @@ import TopBar from '@/components/TopBar';
 import TextType from '@/components/TextType';
 
 export default function Home() {
-  // Estado para las bolas
   const [ballCount, setBallCount] = useState(50);
-  // NUEVO ESTADO: Saber si es móvil
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth <= 768;
       setIsMobile(mobile);
-      // 120 en PC, 40 en celular (bajé un poco más para que vaya fluido)
-      setBallCount(mobile ? 40 : 120);
+      setBallCount(mobile ? 50 : 85);
     };
 
-    handleResize(); // Ejecutar al inicio
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // --- FUNCIÓN PARA EL SCROLL AUTOMÁTICO ---
+  const scrollToAbout = () => {
+    const section = document.getElementById('intro');
+    if (section) {
+      // Lenis (el smooth scroll) detectará esto y lo hará suave
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
-      {/* 1. CURSOR (Solo en PC) */}
       <div className="hidden md:block fixed inset-0 pointer-events-none z-[50]">
         <Ribbons enableShaderEffect={true} />
       </div>
@@ -46,21 +50,22 @@ export default function Home() {
           <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden px-4">
             
             {/* FONDO INTERACTIVO */}
-            <div className="absolute inset-0 z-0">
+            {/* TRUCO MAESTRO PARA EL SCROLL EN CELULAR:
+                - pointer-events-none: En celular, el canvas es "intocable". El dedo pasa a través y hace scroll en la página.
+                - md:pointer-events-auto: En PC, sí permite interactuar con el mouse.
+            */}
+            <div className="absolute inset-0 z-0 pointer-events-none md:pointer-events-auto">
                <Ballpit 
                   count={ballCount}
                   gravity={1}
                   friction={0.95}
                   wallBounce={0.95}
-                  // AQUÍ ESTÁ EL TRUCO:
-                  // Si es móvil (isMobile es true), followCursor es FALSE.
-                  // Así el usuario puede hacer scroll tranquilo y dar clic a los botones.
                   followCursor={!isMobile} 
                   colors={['#00f3ff', '#bd00ff', '#1a1a1a']}
                />
             </div>
 
-            {/* CONTENIDO HERO (Importante: pointer-events-none en el contenedor) */}
+            {/* CONTENIDO HERO */}
             <div className="z-10 flex flex-col items-center justify-center pointer-events-none mix-blend-difference">
               
               <div className="flex flex-col items-start relative">
@@ -72,14 +77,18 @@ export default function Home() {
                 </h1>
               </div>
 
-              {/* BOTONES: Asegúrate que tengan pointer-events-auto */}
               <div className="flex flex-col md:flex-row gap-6 mt-8 md:mt-12 pointer-events-auto">
-                <button className="group relative px-8 py-4 rounded-full border border-[#bd00ff] bg-transparent overflow-hidden transition-all duration-300 hover:bg-[#bd00ff]/10 active:scale-95 cursor-pointer">
+                {/* BOTÓN 1: DESCUBRIR MÁS (Con Scroll) */}
+                <button 
+                  onClick={scrollToAbout} // <--- AQUÍ ESTÁ LA ACCIÓN
+                  className="group relative px-8 py-4 rounded-full border border-[#bd00ff] bg-transparent overflow-hidden transition-all duration-300 hover:bg-[#bd00ff]/10 active:scale-95 cursor-pointer"
+                >
                   <span className="relative z-10 font-mono font-bold text-white tracking-wider text-sm">
                     DESCUBRIR MÁS
                   </span>
                 </button>
 
+                {/* BOTÓN 2 */}
                 <button className="group relative pl-2 pr-8 py-2 rounded-full border border-[#bd00ff] bg-[#bd00ff] flex items-center gap-4 shadow-[0_0_20px_rgba(189,0,255,0.4)] hover:shadow-[0_0_40px_rgba(189,0,255,0.6)] hover:scale-105 transition-all duration-300 active:scale-95 cursor-pointer">
                   <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#bd00ff] group-hover:rotate-[-45deg] transition-transform duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5">
@@ -99,8 +108,9 @@ export default function Home() {
             </div>
           </section>
 
-          {/* ... resto del código igual ... */}
-          <section className="min-h-[50vh] flex items-center justify-center py-20 px-4 md:px-20">
+          {/* --- INTRO TEXT REVEAL --- */}
+          {/* Agregamos id="intro" para que el botón sepa dónde bajar */}
+          <section id="intro" className="min-h-[50vh] flex items-center justify-center py-20 px-4 md:px-20 scroll-mt-20">
               <div className="text-2xl md:text-4xl font-bold text-center leading-none max-w-5xl">
                   <TextType
                     text={[

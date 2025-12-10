@@ -10,24 +10,24 @@ gsap.registerPlugin(ScrollTrigger);
 const projects = [
   {
     id: 1,
-    title: "ECOMMERCE",
-    cat: "Full Stack / React",
+    title: "Clinica Dental",
+    cat: "LANDINGPAGE",
     img: "/img/foto1.png", 
-    link: "https://frontend-tienda-erick.vercel.app/" 
+    link: "https://clinica-dental-one.vercel.app/" 
   },
   {
     id: 2,
-    title: "ARQUITECTURA",
-    cat: "Diseño / Minimalista",
+    title: "Tienda Online",
+    cat: "ECOMERCE",
     img: "/img/foto2.png",
-    link: "https://awwwards.com" 
+    link: "https://frontend-tienda-erick.vercel.app/" 
   },
   {
     id: 3,
-    title: "DENTAL CARE",
-    cat: "Astro / SEO",
+    title: "Estudio de Arquitectura",
+    cat: "LANDINGPAGE",
     img: "/img/foto3.png",
-    link: "https://vercel.com"   
+    link: "https://estudio-arquitectura-omega.vercel.app/"   
   },
 ];
 
@@ -106,7 +106,7 @@ export default function ProjectGallery() {
                 </div>
 
                 <div className="absolute bottom-0 left-0 p-6 md:p-10 z-10 bg-gradient-to-t from-black/90 via-black/50 to-transparent w-full translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500 pointer-events-none">
-                    <span className="font-mono text-xs md:text-sm text-neon-purple mb-2 block uppercase tracking-wider">
+                    <span className="font-mono font-bold text-xs md:text-sm text-neon-purple mb-2 block uppercase tracking-wider">
                       {project.cat}
                     </span>
                     <h3 className="text-4xl md:text-7xl font-sans font-black text-white uppercase leading-none">

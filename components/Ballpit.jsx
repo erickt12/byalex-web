@@ -256,10 +256,11 @@ function S(e) {
         document.body.addEventListener('pointerleave', L);
         document.body.addEventListener('click', C);
 
-        document.body.addEventListener('touchstart', TouchStart, { passive: false });
-        document.body.addEventListener('touchmove', TouchMove, { passive: false });
-        document.body.addEventListener('touchend', TouchEnd, { passive: false });
-        document.body.addEventListener('touchcancel', TouchEnd, { passive: false });
+        // OJO: Se quitaron { passive: false } para permitir scroll nativo
+        document.body.addEventListener('touchstart', TouchStart); 
+        document.body.addEventListener('touchmove', TouchMove);
+        document.body.addEventListener('touchend', TouchEnd);
+        document.body.addEventListener('touchcancel', TouchEnd);
 
         R = true;
       }
@@ -326,9 +327,10 @@ function L() {
   }
 }
 
+// CORREGIDO: Ya no tiene e.preventDefault()
 function TouchStart(e) {
   if (e.touches.length > 0) {
-    e.preventDefault();
+    // e.preventDefault();  <--- ELIMINADO PARA PERMITIR SCROLL
     A.x = e.touches[0].clientX;
     A.y = e.touches[0].clientY;
 
@@ -347,9 +349,10 @@ function TouchStart(e) {
   }
 }
 
+// CORREGIDO: Ya no tiene e.preventDefault()
 function TouchMove(e) {
   if (e.touches.length > 0) {
-    e.preventDefault();
+    // e.preventDefault(); <--- ELIMINADO PARA PERMITIR SCROLL
     A.x = e.touches[0].clientX;
     A.y = e.touches[0].clientY;
 
@@ -553,7 +556,6 @@ class Y extends c {
 
 const X = {
   count: 200,
-  // TUS COLORES DE MARCA POR DEFECTO
   colors: ['#00f3ff', '#bd00ff', '#1a1a1a'], 
   ambientColor: 16777215,
   ambientIntensity: 1,
@@ -672,7 +674,8 @@ function createBallpit(e, t = {}) {
   const r = new a();
   let c = false;
 
-  e.style.touchAction = 'pan-y';
+  // IMPORTANTE: 'pan-y' para permitir scroll vertical
+  e.style.touchAction = 'pan-y'; 
   e.style.userSelect = 'none';
   e.style.webkitUserSelect = 'none';
 
@@ -722,13 +725,10 @@ function createBallpit(e, t = {}) {
   };
 }
 
-// Al final de components/Ballpit.jsx
-
 const Ballpit = ({ className = '', followCursor = true, ...props }) => {
   const canvasRef = useRef(null);
   const spheresInstanceRef = useRef(null);
 
-  // 1. Inicialización (Crea la escena)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -743,13 +743,12 @@ const Ballpit = ({ className = '', followCursor = true, ...props }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // 2. NUEVO: Escuchar cambios en la cantidad de bolas (props.count)
+  // Listener para actualizar cantidad
   useEffect(() => {
     if (spheresInstanceRef.current && props.count) {
-      // Usamos el método interno setCount que ya tenía la clase
       spheresInstanceRef.current.setCount(props.count);
     }
-  }, [props.count]); // <--- Se ejecuta cada vez que cambia el número
+  }, [props.count]);
 
   return <canvas className={className} ref={canvasRef} style={{ width: '100%', height: '100%' }} />;
 };
