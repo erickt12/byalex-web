@@ -47,7 +47,7 @@ const plans = [
     id: 3,
     name: "E-COMMERCE",
     priceARS: "450.000",
-    priceUSD: "500",
+    priceUSD: "450",
     desc: "Vende 24/7. Una tienda robusta, segura y automatizada.",
     features: [
       "Código a Medida (Next.js) o Shopify",

@@ -10,6 +10,7 @@ import TopBar from '@/components/TopBar';
 import TextType from '@/components/TextType';
 import Pricing from '@/components/Pricing';
 import Process from '@/components/Process';
+import FAQ from '@/components/FAQ';
 
 export default function Home() {
   const [ballCount, setBallCount] = useState(50);
@@ -124,11 +125,15 @@ export default function Home() {
             <Pricing />
           </Suspense>
 
-          <section className="h-screen flex items-center justify-center bg-black">
-              <h2 className="text-[15vw] font-bold text-gray-900 hover:text-white transition-colors duration-500 cursor-pointer">
-                  CONTACT
-              </h2>
-          </section>
+{/* --- FAQ (NUEVA SECCIÓN) --- */}
+          <FAQ />
+
+          {/* --- MINI FOOTER (CRÉDITOS) --- */}
+          <footer className="py-10 text-center border-t border-white/10 bg-black">
+              <p className="font-mono text-gray-600 text-xs">
+                  © {new Date().getFullYear()} BYALEX. ALL RIGHTS RESERVED.
+              </p>
+          </footer>
 
         </main>
       </SmoothScroll>
