@@ -1,27 +1,32 @@
 // src/app/page.tsx
 'use client';
 import { useState, useEffect } from 'react';
+// ... (tus imports siguen igual)
 import Preloader from '@/components/Preloader';
 import ProjectGallery from '@/components/ProjectGallery';
 import SmoothScroll from '@/components/SmoothScroll';
 import Ribbons from '@/components/Ribbons';
 import Ballpit from '@/components/Ballpit';
 import TopBar from '@/components/TopBar';
-import TextType from '@/components/TextType'; // Importante: Importar el efecto de texto
+import TextType from '@/components/TextType';
 
 export default function Home() {
-  // Estado para controlar la cantidad de bolas según el dispositivo
-  const [ballCount, setBallCount] = useState(50); 
+  // Estado para las bolas
+  const [ballCount, setBallCount] = useState(50);
+  // NUEVO ESTADO: Saber si es móvil
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const updateCount = () => {
-      // 120 bolas en PC, 50 en celular
-      setBallCount(window.innerWidth > 768 ? 85 : 50);
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      // 120 en PC, 40 en celular (bajé un poco más para que vaya fluido)
+      setBallCount(mobile ? 40 : 120);
     };
 
-    updateCount(); // Ejecutar al inicio
-    window.addEventListener('resize', updateCount);
-    return () => window.removeEventListener('resize', updateCount);
+    handleResize(); // Ejecutar al inicio
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (
@@ -31,13 +36,9 @@ export default function Home() {
         <Ribbons enableShaderEffect={true} />
       </div>
 
-      {/* 2. TOP BAR */}
       <TopBar /> 
-
-      {/* 3. PRELOADER */}
       <Preloader />
 
-      {/* 4. CONTENIDO PRINCIPAL */}
       <SmoothScroll>
         <main className="bg-dark min-h-screen text-white selection:bg-neon-cyan selection:text-black">
           
@@ -48,18 +49,20 @@ export default function Home() {
             <div className="absolute inset-0 z-0">
                <Ballpit 
                   count={ballCount}
-                  gravity={0.1}
+                  gravity={1}
                   friction={0.95}
                   wallBounce={0.95}
-                  followCursor={true}
+                  // AQUÍ ESTÁ EL TRUCO:
+                  // Si es móvil (isMobile es true), followCursor es FALSE.
+                  // Así el usuario puede hacer scroll tranquilo y dar clic a los botones.
+                  followCursor={!isMobile} 
                   colors={['#00f3ff', '#bd00ff', '#1a1a1a']}
                />
             </div>
 
-            {/* CONTENIDO HERO */}
+            {/* CONTENIDO HERO (Importante: pointer-events-none en el contenedor) */}
             <div className="z-10 flex flex-col items-center justify-center pointer-events-none mix-blend-difference">
               
-              {/* Títulos */}
               <div className="flex flex-col items-start relative">
                 <span className="font-mono text-xl md:text-5xl font-bold tracking-widest text-neon-purple mb-0 md:mb-2 ml-1">
                   BYALEX
@@ -69,17 +72,15 @@ export default function Home() {
                 </h1>
               </div>
 
-              {/* Botones (Con pointer-events-auto para que funcionen) */}
+              {/* BOTONES: Asegúrate que tengan pointer-events-auto */}
               <div className="flex flex-col md:flex-row gap-6 mt-8 md:mt-12 pointer-events-auto">
-                {/* Botón 1 */}
-                <button className="group relative px-8 py-4 rounded-full border border-[#bd00ff] bg-transparent overflow-hidden transition-all duration-300 hover:bg-[#bd00ff]/10 active:scale-95">
+                <button className="group relative px-8 py-4 rounded-full border border-[#bd00ff] bg-transparent overflow-hidden transition-all duration-300 hover:bg-[#bd00ff]/10 active:scale-95 cursor-pointer">
                   <span className="relative z-10 font-mono font-bold text-white tracking-wider text-sm">
                     DESCUBRIR MÁS
                   </span>
                 </button>
 
-                {/* Botón 2 */}
-                <button className="group relative pl-2 pr-8 py-2 rounded-full border border-[#bd00ff] bg-[#bd00ff] flex items-center gap-4 shadow-[0_0_20px_rgba(189,0,255,0.4)] hover:shadow-[0_0_40px_rgba(189,0,255,0.6)] hover:scale-105 transition-all duration-300 active:scale-95">
+                <button className="group relative pl-2 pr-8 py-2 rounded-full border border-[#bd00ff] bg-[#bd00ff] flex items-center gap-4 shadow-[0_0_20px_rgba(189,0,255,0.4)] hover:shadow-[0_0_40px_rgba(189,0,255,0.6)] hover:scale-105 transition-all duration-300 active:scale-95 cursor-pointer">
                   <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#bd00ff] group-hover:rotate-[-45deg] transition-transform duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -92,16 +93,14 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Footer del Hero */}
             <div className="absolute bottom-10 flex justify-between w-full px-10 font-mono text-xs uppercase opacity-70 pointer-events-none text-white">
               <span>[ SCROLL ]</span>
               <span>Based in Ensenada</span>
             </div>
           </section>
 
-          {/* --- INTRO TEXT REVEAL (Recuperado) --- */}
+          {/* ... resto del código igual ... */}
           <section className="min-h-[50vh] flex items-center justify-center py-20 px-4 md:px-20">
-              {/* Aquí aplicamos los estilos que pediste: Negrita, texto junto (leading-none), tamaño responsivo */}
               <div className="text-2xl md:text-4xl font-bold text-center leading-none max-w-5xl">
                   <TextType
                     text={[
@@ -117,10 +116,8 @@ export default function Home() {
               </div>
           </section>
 
-          {/* --- PROYECTOS --- */}
           <ProjectGallery />
 
-          {/* --- FOOTER --- */}
           <section className="h-screen flex items-center justify-center bg-black">
               <h2 className="text-[15vw] font-bold text-gray-900 hover:text-white transition-colors duration-500 cursor-pointer">
                   CONTACT
