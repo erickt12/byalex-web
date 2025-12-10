@@ -57,7 +57,6 @@ export default function ProjectGallery() {
     );
   }, { scope: triggerRef });
 
-  // Función de navegación segura
   const handleProjectClick = (link: string) => {
     if (typeof window !== 'undefined') {
       window.open(link, '_blank');
@@ -80,15 +79,9 @@ export default function ProjectGallery() {
         {projects.map((project) => (
           <div key={project.id} className="w-[85vw] md:w-[80vw] h-screen p-4 md:p-10 flex items-center justify-center shrink-0 relative group">
             
-            {/* AGREGADO onTouchEnd para móviles rebeldes */}
+            {/* CORRECCIÓN: Quitamos onTouchEnd. Solo onClick. */}
             <div 
                 onClick={() => handleProjectClick(project.link)}
-                onTouchEnd={(e) => {
-                   // Evitamos que el evento se propague si es un simple tap
-                   // (Nota: si arrastras el dedo, onTouchEnd puede dispararse igual, 
-                   // pero para una galería simple suele ser preferible que abra el link)
-                   handleProjectClick(project.link);
-                }}
                 className="relative w-full h-[70%] md:h-[80%] overflow-hidden bg-glass border border-white/10 backdrop-blur-md rounded-2xl transition-all duration-700 ease-out transform scale-100 md:scale-95 md:group-hover:scale-100 group-hover:shadow-2xl group-hover:border-white/30 cursor-pointer"
                 role="link"
                 tabIndex={0}
@@ -106,7 +99,7 @@ export default function ProjectGallery() {
                 </div>
 
                 <div className="absolute bottom-0 left-0 p-6 md:p-10 z-10 bg-gradient-to-t from-black/90 via-black/50 to-transparent w-full translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500 pointer-events-none">
-                    <span className="font-mono font-bold text-xs md:text-sm text-neon-purple mb-2 block uppercase tracking-wider">
+                    <span className="font-mono text-xs md:text-sm text-neon-purple mb-2 block uppercase tracking-wider">
                       {project.cat}
                     </span>
                     <h3 className="text-4xl md:text-7xl font-sans font-black text-white uppercase leading-none">

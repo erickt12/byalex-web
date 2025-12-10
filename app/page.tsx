@@ -114,7 +114,7 @@ export default function Home() {
               <div className="text-2xl md:text-4xl font-bold text-center leading-none max-w-5xl">
                   <TextType
                     text={[
-                      "Diseñamos el futuro de la web, combinando código artesanal con narrativas visuales inmersivas."
+                      "CREO EXPERIENCIAS DIGITALES QUE NO SOLO SE VEN BIEN, SI NO QUE CUENTAN UNA HISTORIA Y ELEVAN EL VALOR PERCIBIDO DE TU MARCA."
                     ]}
                     typingSpeed={35}      
                     startOnVisible={true} 
