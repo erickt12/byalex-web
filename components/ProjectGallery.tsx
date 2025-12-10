@@ -72,7 +72,7 @@ export default function ProjectGallery() {
             <h2 className="text-[10vw] font-sans font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-600">
                 PROYECTOS
             </h2>
-            <p className="font-mono text-neon-cyan mt-4 tracking-widest">SCROLL TO EXPLORE --&gt;</p>
+            <p className="font-mono text-neon-cyan mt-4 tracking-widest">SCROLL --&gt;</p>
         </div>
 
         {/* Project Cards */}
@@ -99,7 +99,7 @@ export default function ProjectGallery() {
                 </div>
 
                 <div className="absolute bottom-0 left-0 p-6 md:p-10 z-10 bg-gradient-to-t from-black/90 via-black/50 to-transparent w-full translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-500 pointer-events-none">
-                    <span className="font-mono text-xs md:text-sm text-neon-purple mb-2 block uppercase tracking-wider">
+                    <span className="font-mono font-bold text-xs md:text-sm text-neon-purple mb-2 block uppercase tracking-wider">
                       {project.cat}
                     </span>
                     <h3 className="text-4xl md:text-7xl font-sans font-black text-white uppercase leading-none">
