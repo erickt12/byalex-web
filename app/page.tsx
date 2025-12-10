@@ -9,6 +9,7 @@ import Ballpit from '@/components/Ballpit';
 import TopBar from '@/components/TopBar';
 import TextType from '@/components/TextType';
 import Process from '@/components/Process';
+import Pricing from '@/components/Pricing';
 
 export default function Home() {
   const [ballCount, setBallCount] = useState(50);
@@ -131,6 +132,8 @@ export default function Home() {
 
           {/* --- CÓMO TRABAJO (NUEVA SECCIÓN) --- */}
           <Process />
+
+          <Pricing />
 
           <section className="h-screen flex items-center justify-center bg-black">
               <h2 className="text-[15vw] font-bold text-gray-900 hover:text-white transition-colors duration-500 cursor-pointer">
