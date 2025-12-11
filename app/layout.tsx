@@ -16,7 +16,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ByAlex | Digital Experience",
+  title: "ByAlex | WebDesing",
   description: "Forging the digital future.",
 };
 

@@ -12,7 +12,7 @@ const plans = [
   {
     id: 1,
     name: "LANDING PAGE",
-    priceARS: "250.000",
+    priceARS: "200.000",
     priceUSD: "200",
     desc: "Convierte visitas en clientes. Ideal para Profesionales, Servicios y Ads.",
     features: [
