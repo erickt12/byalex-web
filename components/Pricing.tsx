@@ -128,10 +128,19 @@ export default function Pricing() {
     );
   }, { scope: containerRef });
 
-  const handleWsp = (planName: string, price: string, currentCurrency: string) => {
+const handleWsp = (planName: string, price: string, currentCurrency: string) => {
+    
+    // --- TUS NÚMEROS AQUÍ ---
+    const PHONE_ARG = "5492215383081"; // Pon tu número de Argentina
+    const PHONE_ECU = "593963977819";  // Pon tu número de Ecuador
+    // ------------------------
+
+    // Lógica: Si la moneda es ARS, usa el cel de Argentina. Si es USD, el de Ecuador.
+    const phone = currentCurrency === 'ARS' ? PHONE_ARG : PHONE_ECU;
+    
     const symbol = currentCurrency === 'ARS' ? '$' : 'USD ';
     const message = `Hola Erick! 👋 Vengo de tu web. Me interesa el plan *${planName}* de ${symbol}${price}. ¿Podemos charlar?`;
-    const phone = "5492211234567"; // TU NÚMERO AQUÍ
+    
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
   };
 

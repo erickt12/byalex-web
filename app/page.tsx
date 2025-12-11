@@ -35,6 +35,14 @@ export default function Home() {
     }
   };
 
+  // 1. Agrega esta función arriba, junto a scrollToAbout
+const scrollToPricing = () => {
+  const section = document.getElementById('pricing');
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+
   return (
     <>
       <div className="hidden md:block fixed inset-0 pointer-events-none z-[50]">
@@ -80,7 +88,9 @@ export default function Home() {
                   </span>
                 </button>
 
-                <button className="group relative pl-2 pr-8 py-2 rounded-full border border-[#bd00ff] bg-[#bd00ff] flex items-center gap-4 shadow-[0_0_20px_rgba(189,0,255,0.4)] hover:shadow-[0_0_40px_rgba(189,0,255,0.6)] hover:scale-105 transition-all duration-300 active:scale-95 cursor-pointer">
+                <button 
+                onClick={scrollToPricing} // <--- AQUÍ LA MAGIA
+                className="group relative pl-2 pr-8 py-2 rounded-full border border-[#bd00ff] bg-[#bd00ff] flex items-center gap-4 shadow-[0_0_20px_rgba(189,0,255,0.4)] hover:shadow-[0_0_40px_rgba(189,0,255,0.6)] hover:scale-105 transition-all duration-300 active:scale-95 cursor-pointer">
                   <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#bd00ff] group-hover:rotate-[-45deg] transition-transform duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -121,12 +131,23 @@ export default function Home() {
           <Process />
 
           {/* 2. ENVOLVEMOS PRICING EN SUSPENSE */}
-          <Suspense fallback={<div className="h-screen bg-dark" />}>
+          {/* <Suspense fallback={<div className="h-screen bg-dark" />}>
             <Pricing />
-          </Suspense>
+          </Suspense> */}
 
-{/* --- FAQ (NUEVA SECCIÓN) --- */}
-          <FAQ />
+          {/* AGREGAMOS id="pricing" AQUÍ PARA QUE EL SCROLL SEPA DONDE BAJAR */}
+{/* PRECIOS Y FAQ EN SUSPENSE */}
+<Suspense fallback={<div className="h-screen bg-dark" />}>
+            
+            {/* SECCIÓN CON ID PARA EL SCROLL */}
+            <section id="pricing" className="scroll-mt-20">
+               <Pricing />
+            </section>
+
+            {/* FAQ VA DESPUÉS */}
+            <FAQ />
+            
+          </Suspense>
 
           {/* --- MINI FOOTER (CRÉDITOS) --- */}
           <footer className="py-10 text-center border-t border-white/10 bg-black">

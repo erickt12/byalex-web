@@ -1,10 +1,11 @@
 // src/components/FAQ.tsx
 'use client';
-import { useState, useRef } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation'; // Necesario para detectar país
 import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
 
 const faqs = [
+  // ... (tus preguntas siguen igual) ...
   {
     question: "¿Cuánto tiempo tarda un proyecto completo?",
     answer: "Depende de la magnitud. Una Landing Page de alto impacto toma entre 5 a 7 días. Un sitio corporativo completo o E-commerce suele llevar de 2 a 4 semanas. Siempre priorizo la calidad sobre la velocidad."
@@ -23,23 +24,60 @@ const faqs = [
   },
   {
     question: "¿Trabajas con clientes internacionales?",
-    answer: "Sí, trabajo con clientes de todo el mundo (Latam, USA, Europa). Acepto pagos en Dólares, transferencias internacionales y si eres de Ecuador o Argentina puedes pagar directamente desde tu banca mobile o mercado pago."
-  },
+    answer: "Sí, trabajo con clientes de todo el mundo (Latam, USA, Europa). Acepto pagos en Dólares, transferencias internacionales y si eres de Ecuador o Argentina puedes pagar directamente desde tu banca mobile o mercado pago."  },
   {
     question: "¿Aceptas trabajos pequeños?",
     answer: "No hay proyecto pequeño si la visión es grande. Me encanta trabajar con emprendedores que recién inician tanto como con empresas consolidadas. Si el proyecto me desafía, cuenta conmigo."
   },
   {
     question: "¿Cómo son las formas de pago?",
-    answer: "Para iniciar el proyecto se abona el 50% de anticipo para empezar a trabajar en tu proyecto, y el 50% restante se abona contra entrega, una vez que estés 100% satisfecho con el resultado."
-  }
+    answer: "Para iniciar el proyecto se abona el 50% de anticipo para empezar a trabajar en tu proyecto, y el 50% restante se abona contra entrega, una vez que estés 100% satisfecho con el resultado."  }
 ];
 
 export default function FAQ() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const searchParams = useSearchParams();
+  const [currency, setCurrency] = useState<'ARS' | 'USD'>('ARS');
+
+  // LÓGICA DE DETECCIÓN (Copiada de Pricing para consistencia)
+  useEffect(() => {
+    const checkLocation = async () => {
+      const urlCountry = searchParams.get('pais');
+      const urlCur = searchParams.get('cur');
+
+      if (urlCountry === 'EC' || urlCountry === 'USA' || urlCur === 'USD') {
+        setCurrency('USD');
+        return;
+      }
+      if (urlCountry === 'AR' || urlCur === 'ARS') {
+        setCurrency('ARS');
+        return;
+      }
+      try {
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+        if (data.country_code !== 'AR') setCurrency('USD');
+      } catch (error) {
+        console.log("Error detectando país");
+      }
+    };
+    checkLocation();
+  }, [searchParams]);
 
   const toggleAccordion = (index: number) => {
     setActiveIndex(activeIndex === index ? null : index);
+  };
+
+  const handleFinalWsp = () => {
+    // --- TUS NÚMEROS AQUÍ TAMBIÉN ---
+    const PHONE_ARG = "5492215383081"; // Num Argentina
+    const PHONE_ECU = "593963977819";  // Num Ecuador
+    // -------------------------------
+
+    const phone = currency === 'ARS' ? PHONE_ARG : PHONE_ECU;
+    const message = "Hola Erick! Tengo algunas dudas sobre mis proyectos web. ¿Podemos hablar?";
+    
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   return (
@@ -72,7 +110,6 @@ export default function FAQ() {
                 {faq.question}
               </span>
               <span className="relative ml-4 flex-shrink-0">
-                 {/* Icono + / - animado */}
                  <div className={`w-6 h-6 flex items-center justify-center transition-transform duration-300 ${activeIndex === index ? 'rotate-45' : 'rotate-0'}`}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-neon-cyan">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -96,12 +133,11 @@ export default function FAQ() {
         ))}
       </div>
 
-      {/* CTA FINAL: Ya que borramos el CONTACT gigante, ponemos un botón final aquí */}
       <div className="mt-24 text-center">
         <p className="text-white mb-6 font-mono">¿Tienes otra duda o estás listo?</p>
         <button 
-             onClick={() => window.open('https://wa.me/5492211234567', '_blank')} // TU NUMERO AQUI
-             className="px-10 py-4 bg-neon-cyan text-black font-bold text-xl rounded-full hover:shadow-[0_0_30px_#00f3ff] transition-all duration-300 hover:scale-105 active:scale-95"
+             onClick={handleFinalWsp} // <--- Usa la nueva función inteligente
+             className="px-10 py-4 bg-neon-cyan text-black font-bold text-xl rounded-full hover:shadow-[0_0_30px_#00f3ff] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
         >
             HABLAR CON ERICK
         </button>
