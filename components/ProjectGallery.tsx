@@ -76,7 +76,7 @@ export default function ProjectGallery() {
                 PROYECTOS
             </h2>
             {/* CAMBIO: Flecha hacia abajo y animación de rebote suave */}
-            <div className="flex flex-col items-center gap-2 mt-4 animate-bounce">
+            {/* <div className="flex flex-col items-center gap-2 mt-4 animate-bounce">
                 <p className="font-mono text-neon-cyan tracking-widest text-sm md:text-base">
                    
                 </p>
@@ -90,7 +90,7 @@ export default function ProjectGallery() {
                 >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
                 </svg>
-            </div>
+            </div> */}
         </div>
 
         {/* Project Cards */}

@@ -11,6 +11,7 @@ import TextType from '@/components/TextType';
 import Pricing from '@/components/Pricing';
 import Process from '@/components/Process';
 import FAQ from '@/components/FAQ';
+import GlobalScroll from '@/components/GlobalScroll';
 
 export default function Home() {
   const [ballCount, setBallCount] = useState(50);
@@ -50,6 +51,7 @@ const scrollToPricing = () => {
       </div>
 
       <TopBar /> 
+      <GlobalScroll />
       <Preloader />
 
       <SmoothScroll>
