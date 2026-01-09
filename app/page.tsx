@@ -116,7 +116,7 @@ const scrollToPricing = () => {
                     text={[
                       "CREO EXPERIENCIAS DIGITALES QUE NO SOLO SE VEN BIEN, SINO QUE CUENTAN UNA HISTORIA Y ELEVAN EL VALOR PERCIBIDO DE TU MARCA"
                     ]}
-                    typingSpeed={35}      
+                    typingSpeed={55}      
                     startOnVisible={true} 
                     loop={false}          
                     showCursor={true}     
