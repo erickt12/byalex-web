@@ -19,7 +19,7 @@ export default function TopBar() {
         </span>
 
         <p className="font-mono text-xs md:text-sm tracking-widest text-white/90">
-         STATUS: <span className="text-neon-cyan">OPEN FOR WORK</span> — OFERTA DE NAVIDAD: -20% OFF
+         STATUS: <span className="text-neon-cyan">OPEN</span> — OFERTA DE AÑO NUEVO: -20% OFF
         </p>
 
         {/* Botón Reservar Ahora con Scroll */}

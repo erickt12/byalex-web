@@ -12,21 +12,24 @@ const projects = [
     id: 1,
     title: "Clinica Dental",
     cat: "LANDINGPAGE",
-    img: "/img/foto1.png", 
+    imgDesktop: "/img/foto1.png", 
+    imgMobile: "/img/mobile1.png", 
     link: "https://clinica-dental-one.vercel.app/" 
   },
   {
     id: 2,
     title: "Tienda Online",
     cat: "ECOMERCE",
-    img: "/img/foto2.png",
+    imgDesktop: "/img/foto2.png",
+    imgMobile: "/img/mobile2.png",
     link: "https://frontend-tienda-erick.vercel.app/" 
   },
   {
     id: 3,
     title: "Estudio de Arquitectura",
     cat: "LANDINGPAGE",
-    img: "/img/foto3.png",
+    imgDesktop: "/img/foto3.png",
+    imgMobile: "/img/mobile3.png",
     link: "https://estudio-arquitectura-omega.vercel.app/"   
   },
 ];
@@ -72,25 +75,51 @@ export default function ProjectGallery() {
             <h2 className="text-[10vw] font-sans font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-600">
                 PROYECTOS
             </h2>
-            <p className="font-mono text-neon-cyan mt-4 tracking-widest">SCROLL --&gt;</p>
+            {/* CAMBIO: Flecha hacia abajo y animación de rebote suave */}
+            <div className="flex flex-col items-center gap-2 mt-4 animate-bounce">
+                <p className="font-mono text-neon-cyan tracking-widest text-sm md:text-base">
+                   
+                </p>
+                <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    strokeWidth={2} 
+                    stroke="currentColor" 
+                    className="w-6 h-6 text-neon-cyan"
+                >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
+                </svg>
+            </div>
         </div>
 
         {/* Project Cards */}
         {projects.map((project) => (
           <div key={project.id} className="w-[85vw] md:w-[80vw] h-screen p-4 md:p-10 flex items-center justify-center shrink-0 relative group">
             
-            {/* CORRECCIÓN: Quitamos onTouchEnd. Solo onClick. */}
             <div 
                 onClick={() => handleProjectClick(project.link)}
                 className="relative w-full h-[70%] md:h-[80%] overflow-hidden bg-glass border border-white/10 backdrop-blur-md rounded-2xl transition-all duration-700 ease-out transform scale-100 md:scale-95 md:group-hover:scale-100 group-hover:shadow-2xl group-hover:border-white/30 cursor-pointer"
                 role="link"
                 tabIndex={0}
             >
+                {/* --- AQUÍ ESTÁ EL CAMBIO --- */}
+
+                {/* 1. IMAGEN MOBILE (Visible solo en cel, oculta en PC) */}
                 <img
-                    src={project.img}
+                    src={project.imgMobile}
                     alt={project.title}
-                    className="absolute inset-0 w-full h-full object-cover opacity-100 grayscale-0 md:opacity-60 md:grayscale md:group-hover:opacity-100 md:group-hover:grayscale-0 transition-all duration-1000 ease-out pointer-events-none"
+                    className="absolute inset-0 w-full h-full object-cover opacity-100 grayscale-0 transition-all duration-1000 ease-out pointer-events-none md:hidden"
                 />
+
+                {/* 2. IMAGEN DESKTOP (Oculta en cel, visible en PC con efectos hover) */}
+                <img
+                    src={project.imgDesktop}
+                    alt={project.title}
+                    className="absolute inset-0 w-full h-full object-cover hidden md:block md:opacity-60 md:grayscale md:group-hover:opacity-100 md:group-hover:grayscale-0 transition-all duration-1000 ease-out pointer-events-none"
+                />
+                
+                {/* --------------------------- */}
 
                 <div className="absolute top-6 right-6 z-20 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 bg-black/50 p-2 rounded-full backdrop-blur-sm pointer-events-none">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-white">
