@@ -70,14 +70,16 @@ export default function FAQ() {
 
   const handleFinalWsp = () => {
     // --- TUS NÚMEROS AQUÍ TAMBIÉN ---
-    const PHONE_ARG = "5492215383081"; // Num Argentina
+    // const PHONE_ARG = "5492215383081";
     const PHONE_ECU = "593963977819";  // Num Ecuador
     // -------------------------------
 
-    const phone = currency === 'ARS' ? PHONE_ARG : PHONE_ECU;
+// El mensaje que quieres que llegue
     const message = "Hola Erick! Tengo algunas dudas sobre mis proyectos web. ¿Podemos hablar?";
     
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+    // --- LÓGICA SIMPLIFICADA ---
+    // Antes preguntábamos la moneda, ahora vamos directo a Ecuador:
+    window.open(`https://wa.me/${PHONE_ECU}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   return (
